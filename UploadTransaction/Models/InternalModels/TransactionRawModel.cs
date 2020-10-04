@@ -93,7 +93,6 @@ namespace UploadTransaction.Models.InternalModels
                 {
                     errorList.Add("Status  is invalid.");
                 }
-                var tt = Convert.ToDateTime(TransactionDate);
                 if (!DateTime.TryParseExact(TransactionDate, "s", enUS,
                              DateTimeStyles.None, out _))
                 {
