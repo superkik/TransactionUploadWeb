@@ -1,0 +1,153 @@
+﻿@model UploadTransaction.Models.TransactionUploadFile
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link href="~/css/index.css" rel="stylesheet" />
+
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="text-center">
+            <h3 class="display-5">Welcome to teachnical testing.</h3>
+        </div>
+        <hr/>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4>Transaction history</h4>
+                    </div>
+                    <div class="col-md-4" style="text-align: right;">
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-upload" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
+                                <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"></path>
+                            </svg>
+                            Upload
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover" style="width:100%" id="data-table">
+                    <thead>
+                        <tr>
+                            <th>blah</th>
+                            <th>blah 2</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>know data</td>
+                            <td>know data</td>
+                        </tr>
+                        <tr>
+                            <td>know data</td>
+                            <td>know data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    <div class="modal fade bd-example-modal-md" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form asp-controller="Home" id="form-upload" asp-action="Index" enctype="multipart/form-data" method="post">
+
+                        <div class="file-upload" style="padding-top: 0px;">
+
+                            <div class="image-upload-wrap">
+                                <input class="file-upload-input" id="fileupload" asp-for="File" type="file" onchange="readURL(this);" accept="image/*" />
+                                <div class="drag-text">
+                                    <h3>Drag and drop a file or select add file</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content">
+                                <img class="file-upload-image" src="#" alt="your image" /><br />
+                                <span class="image-title">Uploaded Image</span>
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload()" class="remove-image">Remove</button>
+                                </div>
+                            </div>
+                            <button class="file-upload-btn" type="button" id="submit-btn"  style="margin-top:10px">Upload</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+
+
+    <script>
+
+        $(document).ready(function () {
+            $('#data-table').DataTable();
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.image-upload-wrap').hide();
+
+                    $('.file-upload-image').attr('src', e.target.result);
+                    $('.file-upload-content').show();
+
+                    $('.image-title').html(input.files[0].name);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+
+            } else {
+                removeUpload();
+            }
+        }
+
+        function removeUpload() {
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+            $('#fileupload').val('');
+        }
+        $('.image-upload-wrap').bind('dragover', function () {
+            $('.image-upload-wrap').addClass('image-dropping');
+        });
+        $('.image-upload-wrap').bind('dragleave', function () {
+            $('.image-upload-wrap').removeClass('image-dropping');
+        });
+
+
+
+        $('#submit-btn').click(function (e) {
+
+            $('body').loadingModal({ text: 'Uploading ...', 'animation': 'wanderingCubes', opacity:'0.6' });
+            e.preventDefault();
+            $('#form-upload').submit();
+        });
+
+    </script>
+
+}
