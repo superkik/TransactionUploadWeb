@@ -20,13 +20,13 @@
                 <div class="file-upload" style="padding-top: 0px;">
 
                     <div class="image-upload-wrap">
-                        <input class="file-upload-input" id="fileupload" asp-for="File" type="file" onchange="readURL(this);" />
+                        <input class="file-upload-input" id="fileupload" asp-for="File" type="file" onchange="readURL(this);" accept="text/xml, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
                         <div class="drag-text">
                             <h3>Drag and drop a file or select add file</h3>
                         </div>
                     </div>
                     <div class="file-upload-content">
-                        <img class="file-upload-image" src="~/images/import.png" width="100" alt="your image" /><br />
+                        <img class="file-upload-image" src="~/images/import.png" width="100" alt="your image"  /><br />
                         <span class="image-title">Uploaded Image</span>
                         <div class="image-title-wrap">
                             <button type="button" onclick="removeUpload()" class="remove-image">Remove</button>
